@@ -1,3 +1,7 @@
+import 'babel-polyfill';
+
+
+
 /** {string} The Google Maps API endpoint. */
 export const GOOGLE_MAPS_API = 'https://maps.googleapis.com/maps/api/js';
 

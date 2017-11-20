@@ -1,6 +1,13 @@
 {
-   "comments":false,
-   "compact":true,
+    "comments":false,
+    "compact":true,
+
+    "plugins": [
+        ["babel-plugin-transform-builtin-extend", {
+            globals: ["Error", "Array"]
+        }, "babel-plugin-transform-runtime"]
+    ],
+
    "presets":[
       "latest"
    ]

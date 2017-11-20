@@ -14,6 +14,14 @@
 </dd>
 </dl>
 
+## Functions
+
+<dl>
+<dt><a href="#lazymaps">lazymaps(selector, apiKey)</a> ⇒ <code>Array.&lt;Promise&gt;</code></dt>
+<dd><p>Creates new GMap() for every element matching selector.</p>
+</dd>
+</dl>
+
 <a name="GMap"></a>
 
 ## GMap
@@ -22,7 +30,7 @@ Constructs a Google Map on node.
 **Kind**: global class  
 
 * [GMap](#GMap)
-    * [new GMap(node, Our)](#new_GMap_new)
+    * [new GMap(node, apiKey)](#new_GMap_new)
     * [.setUpGoogleMaps()](#GMap+setUpGoogleMaps)
     * [.installGoogleMapsApi()](#GMap+installGoogleMapsApi) ⇒ <code>Promise</code>
     * [.isGoogleMapsApiInstalled()](#GMap+isGoogleMapsApiInstalled) ⇒ <code>boolean</code>
@@ -30,14 +38,14 @@ Constructs a Google Map on node.
 
 <a name="new_GMap_new"></a>
 
-### new GMap(node, Our)
+### new GMap(node, apiKey)
 Constructor method.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
 | node | <code>HTMLElement</code> | The Google Map to install. |
-| Our | <code>string</code> | Google Maps JavaScript key. |
+| apiKey | <code>string</code> | Our Google Maps JavaScript key. |
 
 <a name="GMap+setUpGoogleMaps"></a>
 
@@ -72,3 +80,15 @@ Creates the Google Maps instance.
 {string} The Google Maps API endpoint.
 
 **Kind**: global constant  
+<a name="lazymaps"></a>
+
+## lazymaps(selector, apiKey) ⇒ <code>Array.&lt;Promise&gt;</code>
+Creates new GMap() for every element matching selector.
+
+**Kind**: global function  
+
+| Param | Type |
+| --- | --- |
+| selector | <code>string</code> | 
+| apiKey | <code>string</code> | 
+

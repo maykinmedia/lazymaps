@@ -14,7 +14,7 @@ class GMap {
     /**
      * Constructor method.
      * @param {HTMLElement} node The Google Map to install.
-     * @param {string} Our Google Maps JavaScript key.
+     * @param {string} apiKey Our Google Maps JavaScript key.
      * @returns {Promise} Promise which resolves and calls the the createMap() function as son as THe Google API beocmes availalble.
      */
     constructor(node, apiKey) {

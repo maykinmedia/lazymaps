@@ -93,13 +93,13 @@ describe('GMap', function() {
     });
     
     it('should return false when isGoogleMapsApiInstalled() is called and the script doesn\'t exists', (done) => {
+        delete window.google;
+
         [...document.scripts].forEach(script => {
             if (script.src.match('googleapis.com')) {
                 document.head.removeChild(script);
             }
         });
-
-        delete window.google;
 
         let map1 = new this.GMap();
         spyOn(map1, 'isGoogleMapsApiInstalled').and.callThrough();
@@ -126,7 +126,7 @@ describe('GMap', function() {
             });
     });
 
-    it('should create a google map instance', () => {
+    it('should create a google map instance', (done) => {
         let map = new this.GMap();
         map.constructor(this.node, API_KEY)
             .then(() => {

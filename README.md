@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/maykinmedia/lazymaps.svg?branch=master)](https://travis-ci.org/maykinmedia/lazymaps)
 [![Coverage Status](https://coveralls.io/repos/github/maykinmedia/lazymaps/badge.svg?branch=master)](https://coveralls.io/github/maykinmedia/lazymaps?branch=master)
-[![Code Climate](https://codeclimate.com/github/maykinmedia/lazymaps/badges/gpa.svg)](https://codeclimate.com/github/maykinmedia/lazymaps)
+[![Maintainability](https://api.codeclimate.com/v1/badges/300ec356bdf46e7469e3/maintainability)](https://codeclimate.com/github/maykinmedia/lazymaps/maintainability)
 [![Lintly](https://lintly.com/gh/maykinmedia/lazymaps/badge.svg)](https://lintly.com/gh/maykinmedia/lazymaps/)
 
 [![NPM](https://nodei.co/npm/lazymaps.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/lazymaps/)

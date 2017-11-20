@@ -2,7 +2,7 @@ import GMap, { GMap as GMap2, GOOGLE_MAPS_API, lazymaps } from '../src/lazymaps.
 
 
 window.__env__ = window.__env__ || {};
-const API_KEY = window.__env__.GOOGLE_MAPS_API_KEY;
+const API_KEY = window.__env__.GOOGLE_MAPS_API_KEY || 'AIzaSyAvcFQdsr3rIbdCIlcygzMtVrdDoZ3hc44';
 
 
 describe('module', function() {

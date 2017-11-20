@@ -27,7 +27,7 @@ $ npm i lazymaps --save
 **HTML**
 
 ```html
-<!-- data--coordinates and data--zoom are required. -->
+<!-- data-coordinates and data-zoom are required. -->
 <div class="map" data-coordinates="52.3766882,4.8855208,17" data-zoom="15"></div>
 ```
 

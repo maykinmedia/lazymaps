@@ -106,21 +106,22 @@ class GMap {
                 let lng = parseFloat(marker.longitude);
 
                 let infowindow = new google.maps.InfoWindow({
-                    content: `<h1>${marker.label}</h1><p>${marker.description}</p>`
+                    content: marker.html || `<h1>${marker.label || marker.title}</h1><p>${marker.description}</p>`
                 });
-
-                let image = {
-                    url: this.map.dataset.markerIcon,
-                    scaledSize: new google.maps.Size(16, 27),
-                };
-
+                
                 let tempMarker = new google.maps.Marker({
                     map: this.googleMap,
                     position: {lat, lng},
                     title: marker.label,
                     optimized: false,  // IE
-                    icon: image
                 });
+
+                if (this.map.dataset.markerIcon) {
+                    tempMarker.icon = {
+                        url: this.map.dataset.markerIcon,
+                        scaledSize: new google.maps.Size(16, 27),
+                    };
+                }
 
                 tempMarker.addListener('click', () => {  // jshint ignore:line
                     infowindow.open(this.googleMap, tempMarker);  

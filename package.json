@@ -1,7 +1,7 @@
 {
   "name": "lazymaps",
   "version": "0.1.0",
-  "description": "Lazy loading, easy to use wrapper arround the Google Maps API.",
+  "description": "Lazy loading, easy to use wrapper around the Google Maps API.",
   "main": "dist/lazymaps.js",
   "directories": {
     "test": "test"

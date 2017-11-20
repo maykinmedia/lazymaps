@@ -93,29 +93,32 @@ describe('GMap', function() {
     });
     
     it('should return false when isGoogleMapsApiInstalled() is called and the script doesn\'t exists', (done) => {
-        delete window.google;
+        setTimeout(() => {
 
-        [...document.scripts].forEach(script => {
-            if (script.src.match('googleapis.com')) {
-                document.head.removeChild(script);
-            }
-        });
-
-        let map1 = new this.GMap();
-        spyOn(map1, 'isGoogleMapsApiInstalled').and.callThrough();
-
-        let promise = map1.constructor(this.node, API_KEY);
-        // expect(map1.isGoogleMapsApiInstalled.calls.mostRecent().returnValue).toBeFalsy();
-
-        promise
+            [...document.scripts].forEach(script => {
+                if (script.src.match('googleapis.com')) {
+                    document.head.removeChild(script);
+                }
+            });
+            
+            delete window.google;
+            let map1 = new this.GMap();
+            spyOn(map1, 'isGoogleMapsApiInstalled').and.callThrough();
+            
+            let promise = map1.constructor(this.node, API_KEY);
+            // expect(map1.isGoogleMapsApiInstalled.calls.mostRecent().returnValue).toBeFalsy();
+            
+            promise
             .then(() => {
                 map1.constructor(this.node, API_KEY)
-                    .then(() => {
-                        expect(map1.isGoogleMapsApiInstalled.calls.mostRecent().returnValue).toBeTruthy();
-                        done();
-                    });
+                .then(() => {
+                    expect(map1.isGoogleMapsApiInstalled.calls.mostRecent().returnValue).toBeTruthy();
+                    done();
+                });
             });
-    });
+
+        }, 3000);
+    })
 
     it('should expose google if all API\'s are loaded', (done) => {
         let map = new this.GMap();

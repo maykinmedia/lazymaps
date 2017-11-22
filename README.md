@@ -19,17 +19,40 @@ Install with [npm](https://www.npmjs.com/)
 $ npm i lazymaps --save
 ```
 
-## Usage 
+## Usage
 
 *Code examples in es6, library is es5 compatible.*
-*See [doc](doc/) for full API documentation.*
+*See [doc](https://github.com/maykinmedia/lazymaps/blob/master/doc/lazymaps.md) for full API documentation.*
 
-**HTML**
+**HTML: Basic map**
 
 ```html
 <!-- data-coordinates and data-zoom are required. -->
-<div class="map" data-coordinates="52.3766882,4.8855208,17" data-zoom="15"></div>
+<div class="map" data-coordinates="52.3766849,4.8855208" data-zoom="17"></div>
 ```
+
+
+**HTML: Adding markers**
+
+```html
+<div class="map"
+     data-coordinates="52.3766849,4.8855208"
+     data-zoom="17"
+     data-markers='[{
+        "latitude": 52.3766849,
+        "longitude": 4.8855208,
+        "title": "Maykin Media",
+        "description": "Awesome webdevelopment",
+     }]'
+></div>
+```
+
+
+**HTML: Additional parameters**
+
+`data-disable-default-ui="true"`: Disables the default UI controls.
+`data-disable-info-windows="true`: Disables info windows (see result of new GMap(node, apiKey) to access internal objects like map and markers.
+
 
 
 **JS: Creating a single map**
@@ -47,12 +70,17 @@ new GMap(this.node, apiKey);
 **JS: Create multiple maps using a selector**
 
 ```js
-import GMap from 'lazymaps';
+import { lazymaps } from 'lazymaps';
 
 
 let apiKey = 'ABC'  // https://developers.google.com/maps/documentation/javascript/get-api-key
 lazymaps('.map', apiKey);
 ```
+
+
+**JS: Customizing the map.**
+
+`new GMap(node, apikey)` returns a `Promise` object, lazymaps(selector, apiKey) returns an array of these promises. The resulting promises are resolved with the GMap instance. This can be used for further map customisation, please refer the API documentation [doc](https://github.com/maykinmedia/lazymaps/blob/master/doc/lazymaps.md) for available properties.
 
 
 ## Running tests

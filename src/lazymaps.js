@@ -19,11 +19,23 @@ class GMap {
      */
     constructor(node, apiKey) {
         if(!apiKey) {
-            logKeyWarning();
+            logKeyMissing();
             return;
         }
 
+        /** {HTMLElement} Reference to the map container. */
         this.map = node;
+
+        /** {Object} The Google Maps map instance. */
+        this.googleMap = {};
+
+        /** {Object[]} An array of optional markers. */
+        this.markers = [];
+
+        /** {Object[]} An array of optional info windows.. */
+        this.infoWindows = [];
+
+        /** {string} Parsed string containing the complete URL to the Google Maps API (including API key). */
         this.googleMapsSrc = GOOGLE_MAPS_API + '?key=' + apiKey;
 
         return this.setUpGoogleMaps();
@@ -74,85 +86,95 @@ class GMap {
 
     /**
      * Creates the Google Maps instance.
+     * @returns {Promise}
      */
     createMap() {
-        if (!(this.map.dataset.coordinates && this.map.dataset.zoom)) {
-            console.warn('Please set data-cooordinates and data-zoom on the node you want to use as Google Maps instance.');
-            return;
-        }
+        return new Promise((resolve, reject) => {
 
-        this.geocoder = new google.maps.Geocoder();
+            if (!(this.map.dataset.coordinates && this.map.dataset.zoom)) {
+                logKeyMissing();
+                reject();
+            }
 
-        let lat = parseFloat(this.map.dataset.coordinates.split(',')[0]);
-        let lng = parseFloat(this.map.dataset.coordinates.split(',')[1]);
-        let zoom = parseInt(this.map.dataset.zoom);
+            let lat = parseFloat(this.map.dataset.coordinates.split(',')[0]);
+            let lng = parseFloat(this.map.dataset.coordinates.split(',')[1]);
+            let zoom = parseInt(this.map.dataset.zoom);
+            let markers = (this.map.dataset.markers) ? JSON.parse(this.map.dataset.markers) : [];
+            let disableDefaultUI = this.map.dataset.disableDefaultUi || false;
+            let disableInfoWindows = this.map.dataset.disableInfoWindows || false;
+            let infoWindowConfig = (this.map.dataset.infowindow) ? JSON.parse(this.map.dataset.infowindow) : {};
 
-        if (!lat || !lng || !zoom) {
-            return;
-        }
+            if (!lat || !lng || !zoom) {
+                console.warn('Parsing failed, please provide data-coordinates as commas separated lat/lng pair and data-zoom as number.');
+                reject();
+            }
 
-        this.googleMap = new google.maps.Map(this.map, {
-            center: {lat, lng},
-            zoom,
-            disableDefaultUI: true
-        });
+            this.googleMap = new google.maps.Map(this.map, {
+                center: {lat, lng},
+                zoom,
+                disableDefaultUI
+            });
 
-        let markers = this.map.dataset.markers;
-        if (markers) {
-            markers = JSON.parse(markers);
-
-            for (let marker of markers) {
+            this.markers = markers.map(marker => {
                 let lat = parseFloat(marker.latitude);
                 let lng = parseFloat(marker.longitude);
 
-                let infowindow = new google.maps.InfoWindow({
-                    content: marker.html || `<h1>${marker.label || marker.title}</h1><p>${marker.description}</p>`
-                });
-                
-                let tempMarker = new google.maps.Marker({
+                let mapMarker = new google.maps.Marker({
                     map: this.googleMap,
                     position: {lat, lng},
-                    title: marker.label,
+                    title: marker.title,
                     optimized: false,  // IE
                 });
 
-                if (this.map.dataset.markerIcon) {
-                    tempMarker.icon = {
-                        url: this.map.dataset.markerIcon,
-                        scaledSize: new google.maps.Size(16, 27),
-                    };
+                if (!disableInfoWindows) {
+                    let infoWindow = new google.maps.InfoWindow(infoWindowConfig);
+                    infoWindow.setContent(marker.html || `<h1>${marker.title}</h1><p>${marker.description}</p>`);
+
+                    mapMarker.addListener('click', () => {  // jshint ignore:line
+                        infoWindow.open(this.googleMap, mapMarker);
+                    });
+
+                    this.infoWindows.push(infoWindow)
                 }
 
-                tempMarker.addListener('click', () => {  // jshint ignore:line
-                    infowindow.open(this.googleMap, tempMarker);  
-                });
-            }
-        }
+                // if (this.map.dataset.markerIcon) {
+                //     tempMarker.icon = {
+                //         url: this.map.dataset.markerIcon,
+                //         scaledSize: new google.maps.Size(16, 27),  // FIXME
+                //     };
+                // }
+                return mapMarker;
+            });
+
+            resolve(this);
+        });
     }
 }
 
 
 /**
  * Creates new GMap() for every element matching selector.
- * @param {string} selector 
- * @param {string} apiKey 
+ * @param {string} selector
+ * @param {string} apiKey
  * @returns {Promise[]}
  */
 function lazymaps(selector, apiKey) {
     if(!apiKey) {
-        logKeyWarning();
+        logKeyMissing();
         return;
     }
     return [...document.querySelectorAll(selector)].map(gmap => new GMap(gmap, apiKey));
 }
 
+
 /**
  * Logs a message indicating that no API key is provided.
  * @private
  */
-function logKeyWarning() {
+function logKeyMissing() {
     console.warn('No Google Maps API key provided, please pass key as second argument.')
 }
+
 
 export default GMap;
 export { GMap, lazymaps };

@@ -31,10 +31,15 @@ Constructs a Google Map on node.
 
 * [GMap](#GMap)
     * [new GMap(node, apiKey)](#new_GMap_new)
+    * [.map](#GMap+map)
+    * [.googleMap](#GMap+googleMap)
+    * [.markers](#GMap+markers)
+    * [.infoWindows](#GMap+infoWindows)
+    * [.googleMapsSrc](#GMap+googleMapsSrc)
     * [.setUpGoogleMaps()](#GMap+setUpGoogleMaps)
     * [.installGoogleMapsApi()](#GMap+installGoogleMapsApi) ⇒ <code>Promise</code>
     * [.isGoogleMapsApiInstalled()](#GMap+isGoogleMapsApiInstalled) ⇒ <code>boolean</code>
-    * [.createMap()](#GMap+createMap)
+    * [.createMap()](#GMap+createMap) ⇒ <code>Promise</code>
 
 <a name="new_GMap_new"></a>
 
@@ -47,6 +52,36 @@ Constructor method.
 | node | <code>HTMLElement</code> | The Google Map to install. |
 | apiKey | <code>string</code> | Our Google Maps JavaScript key. |
 
+<a name="GMap+map"></a>
+
+### gMap.map
+{HTMLElement} Reference to the map container.
+
+**Kind**: instance property of <code>[GMap](#GMap)</code>  
+<a name="GMap+googleMap"></a>
+
+### gMap.googleMap
+{Object} The Google Maps map instance.
+
+**Kind**: instance property of <code>[GMap](#GMap)</code>  
+<a name="GMap+markers"></a>
+
+### gMap.markers
+{Object[]} An array of optional markers.
+
+**Kind**: instance property of <code>[GMap](#GMap)</code>  
+<a name="GMap+infoWindows"></a>
+
+### gMap.infoWindows
+{Object[]} An array of optional info windows..
+
+**Kind**: instance property of <code>[GMap](#GMap)</code>  
+<a name="GMap+googleMapsSrc"></a>
+
+### gMap.googleMapsSrc
+{string} Parsed string containing the complete URL to the Google Maps API (including API key).
+
+**Kind**: instance property of <code>[GMap](#GMap)</code>  
 <a name="GMap+setUpGoogleMaps"></a>
 
 ### gMap.setUpGoogleMaps()
@@ -70,7 +105,7 @@ Returns whether the Google Maps API is installed.
 **Kind**: instance method of <code>[GMap](#GMap)</code>  
 <a name="GMap+createMap"></a>
 
-### gMap.createMap()
+### gMap.createMap() ⇒ <code>Promise</code>
 Creates the Google Maps instance.
 
 **Kind**: instance method of <code>[GMap](#GMap)</code>  
